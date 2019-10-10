@@ -5,3 +5,7 @@
 /logs/
 /.idea/
 /*.iml
+/.ssh
+.ssh
+.ssh.pub
+/.ssh.pub
