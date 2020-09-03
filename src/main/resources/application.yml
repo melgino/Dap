@@ -1,9 +1,9 @@
 spring:
   datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/dap?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/dap?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false&serverTimezone=UTC
     username: root
-    password: 123qwe!@#QWE
+    password: 123456
     druid:
       initialSize: 5
       minIdle: 5
@@ -33,7 +33,7 @@ spring:
     servlet:
       load-on-startup: 1
   redis:
-    host: localhost
+    host: 192.168.31.183
     port: 6379
     timeout: 10s
     lettuce:
