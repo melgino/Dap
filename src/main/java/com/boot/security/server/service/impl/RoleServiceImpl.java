@@ -51,7 +51,8 @@ public class RoleServiceImpl implements RoleService {
 
 	private void updateRole(Role role, List<Long> permissionIds) {
 		Role r = roleDao.getRole(role.getName());
-		if (r != null && r.getId() != role.getId()) {
+		/**这里应该使用的是equals，而不是使用 !=的这种方式来进行比较**/
+		if (r != null && !r.getId().equals(role.getId())) {
 			throw new IllegalArgumentException(role.getName() + "已存在");
 		}
 

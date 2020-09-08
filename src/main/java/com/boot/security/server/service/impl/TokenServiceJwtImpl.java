@@ -37,7 +37,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
  */
 @Primary
 @Service
-public class TokenServiceJWTImpl implements TokenService {
+public class TokenServiceJwtImpl implements TokenService {
 
 	private static final Logger log = LoggerFactory.getLogger("adminLogger");
 
@@ -66,7 +66,7 @@ public class TokenServiceJWTImpl implements TokenService {
 		// 登陆日志
 		logService.save(loginUser.getId(), "登陆", true, null);
 
-		String jwtToken = createJWTToken(loginUser);
+		String jwtToken = createJwtToken(loginUser);
 
 		return new Token(jwtToken, loginUser.getLoginTime());
 	}
@@ -77,7 +77,7 @@ public class TokenServiceJWTImpl implements TokenService {
 	 * @param loginUser
 	 * @return
 	 */
-	private String createJWTToken(LoginUser loginUser) {
+	private String createJwtToken(LoginUser loginUser) {
 		Map<String, Object> claims = new HashMap<>();
 		claims.put(LOGIN_USER_KEY, loginUser.getToken());// 放入一个随机字符串，通过该串可找到登陆用户
 
@@ -104,7 +104,7 @@ public class TokenServiceJWTImpl implements TokenService {
 
 	@Override
 	public LoginUser getLoginUser(String jwtToken) {
-		String uuid = getUUIDFromJWT(jwtToken);
+		String uuid = getUuidFromJwt(jwtToken);
 		if (uuid != null) {
 			return redisTemplate.boundValueOps(getTokenKey(uuid)).get();
 		}
@@ -114,7 +114,7 @@ public class TokenServiceJWTImpl implements TokenService {
 
 	@Override
 	public boolean deleteToken(String jwtToken) {
-		String uuid = getUUIDFromJWT(jwtToken);
+		String uuid = getUuidFromJwt(jwtToken);
 		if (uuid != null) {
 			String key = getTokenKey(uuid);
 			LoginUser loginUser = redisTemplate.opsForValue().get(key);
@@ -136,7 +136,7 @@ public class TokenServiceJWTImpl implements TokenService {
 
 	private Key getKeyInstance() {
 		if (KEY == null) {
-			synchronized (TokenServiceJWTImpl.class) {
+			synchronized (TokenServiceJwtImpl.class) {
 				if (KEY == null) {// 双重锁
 					byte[] apiKeySecretBytes = DatatypeConverter.parseBase64Binary(jwtSecret);
 					KEY = new SecretKeySpec(apiKeySecretBytes, SignatureAlgorithm.HS256.getJcaName());
@@ -147,7 +147,7 @@ public class TokenServiceJWTImpl implements TokenService {
 		return KEY;
 	}
 
-	private String getUUIDFromJWT(String jwtToken) {
+	private String getUuidFromJwt(String jwtToken) {
 		if ("null".equals(jwtToken) || StringUtils.isBlank(jwtToken)) {
 			return null;
 		}

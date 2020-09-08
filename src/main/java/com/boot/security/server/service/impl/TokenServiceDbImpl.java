@@ -74,7 +74,7 @@ public class TokenServiceDbImpl implements TokenService {
 		// 登陆日志
 		logService.save(loginUser.getId(), "登陆", true, null);
 
-		String jwtToken = createJWTToken(loginUser);
+		String jwtToken = createJwtToken(loginUser);
 
 		return new Token(jwtToken, loginUser.getLoginTime());
 	}
@@ -85,7 +85,7 @@ public class TokenServiceDbImpl implements TokenService {
 	 * @param loginUser
 	 * @return
 	 */
-	private String createJWTToken(LoginUser loginUser) {
+	private String createJwtToken(LoginUser loginUser) {
 		Map<String, Object> claims = new HashMap<>();
 		claims.put(LOGIN_USER_KEY, loginUser.getToken());// 放入一个随机字符串，通过该串可找到登陆用户
 
@@ -110,7 +110,7 @@ public class TokenServiceDbImpl implements TokenService {
 
 	@Override
 	public LoginUser getLoginUser(String jwtToken) {
-		String uuid = getUUIDFromJWT(jwtToken);
+		String uuid = getUuidFromJwt(jwtToken);
 		if (uuid != null) {
 			TokenModel model = tokenDao.getById(uuid);
 			return toLoginUser(model);
@@ -121,7 +121,7 @@ public class TokenServiceDbImpl implements TokenService {
 
 	@Override
 	public boolean deleteToken(String jwtToken) {
-		String uuid = getUUIDFromJWT(jwtToken);
+		String uuid = getUuidFromJwt(jwtToken);
 		if (uuid != null) {
 			TokenModel model = tokenDao.getById(uuid);
 			LoginUser loginUser = toLoginUser(model);
@@ -162,7 +162,7 @@ public class TokenServiceDbImpl implements TokenService {
 		return KEY;
 	}
 
-	private String getUUIDFromJWT(String jwt) {
+	private String getUuidFromJwt(String jwt) {
 		if ("null".equals(jwt) || StringUtils.isBlank(jwt)) {
 			return null;
 		}

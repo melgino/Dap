@@ -22,7 +22,7 @@ import java.sql.SQLException;
  *
  */
 @Deprecated
-//@Configuration
+/**@Configuration**/
 public class DruidConfig {
 
 	private static final Logger log = LoggerFactory.getLogger("adminLogger");
