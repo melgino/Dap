@@ -17,7 +17,7 @@
 		<google.guava>28.1-jre</google.guava>
 		<fastjson.version>1.2.62</fastjson.version>
 		<druid.version>1.1.20</druid.version>
-		<poi.version>4.1.0</poi.version>
+		<poi.version>4.1.1</poi.version>
 		<jwt.version>0.9.1</jwt.version>
 		<mybatis.version>2.1.0</mybatis.version>
 	</properties>
